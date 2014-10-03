@@ -170,7 +170,7 @@
                             },
                             "/var/init/node.json": {
                                 "content": {
-                                    "run_list": [ "recipe[keboola-common]",  "recipe[keboola-php]", "recipe[keboola-apache2]" ],
+                                    "run_list": [ "recipe[keboola-common]",  "recipe[keboola-php]", "recipe[keboola-apache2]", "recipe[cookbook-keboola-generic-server::demo]" ],
                                     "aws": {
                                         "aws_access_key_id": {
                                             "Ref": "HostKeys"
