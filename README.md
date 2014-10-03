@@ -14,4 +14,4 @@ Each step of instance provisioning provides logs, these can be helplful when som
 * `/var/init/chef_solo.log` - Chef provisioning
 
 If you want to run chef provisioning again run following command as root on provisioned instance:
-`chef-solo -j /var/init/node.json --config /var/init/solo.rb --node-name STACK_NAME`
+`chef-solo --environment production  -j /var/init/node.json --config /var/init/solo.rb --node-name STACK_NAME`
