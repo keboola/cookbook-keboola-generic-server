@@ -7,13 +7,15 @@ end
 
 cookbook_file "/www/demo/index.html" do
   source "index.html"
-  mode "0600"
-  owner "root"
-  group "root"
+  mode "0644"
+  owner "deploy"
+  group "apache"
 end
 
-web_app "#{node['fqdn']}" do
-  server_name node['fqdn']
+
+serverName = "#{node.name}.keboola.com"
+web_app serverName do
+  server_name serverName
   server_aliases [node['hostname']]
   docroot "/www/demo"
   cookbook 'apache2'

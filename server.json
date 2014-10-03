@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "Keboola Syrup Server",
+    "Description": "Keboola Generic Server with Apache and PHP",
     "Parameters": {
         "InstanceType": {
             "Description": "WebServer EC2 instance type",
@@ -170,7 +170,7 @@
                             },
                             "/var/init/node.json": {
                                 "content": {
-                                    "run_list": [ "recipe[keboola-common]",  "recipe[keboola-php]", "recipe[keboola-apache2]", "recipe[cookbook-keboola-generic-server::demo]" ],
+                                    "run_list": [ "recipe[keboola-common]",  "recipe[keboola-php]", "recipe[keboola-apache2]", "recipe[keboola-generic-server::demo]" ],
                                     "aws": {
                                         "aws_access_key_id": {
                                             "Ref": "HostKeys"
