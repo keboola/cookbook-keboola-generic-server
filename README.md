@@ -3,8 +3,19 @@ keboola-generic-server Cookbook
 
 Generic server cookbook and CloudFormation template.
 
+Usage
+-----
+Log into AWS console and create new stack using https://github.com/keboola/cookbook-keboola-generic-server/blob/master/server.json
 
-Cloudformation Troubleshooting
+
+Description 
+-----------
+
+This cookbook will install basic packages required by all Keboola servers using [Keboola Common Cookbook](https://github.com/keboola/cookbook-keboola-common).  Additionaly [PHP](https://github.com/keboola/cookbook-keboola-php) and [apache](https://github.com/keboola/cookbook-keboola-apache2) are installed.
+
+
+
+Troubleshooting
 ---------------
 Each step of instance provisioning provides logs, these can be helplful when something goes wrong during instance provisioning.
 
