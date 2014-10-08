@@ -7,6 +7,7 @@ Usage
 -----
 Log into AWS console and create new stack using https://github.com/keboola/cookbook-keboola-generic-server/blob/master/server.json
 
+When the stack will be complete navigate browser to http://your-stack-name.keboola.com
 
 Description 
 -----------
