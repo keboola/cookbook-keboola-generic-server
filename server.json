@@ -143,6 +143,11 @@
                 },
                 "AWS::CloudFormation::Init": {
                     "config": {
+                        "packages": {
+                            "yum": {
+                                "git": []
+                            }
+                        },
                         "files": {
                             "/var/chef/environments/production.json": {
                                 "source": "https://s3.amazonaws.com/keboola-configs/servers/environments/production.json",
