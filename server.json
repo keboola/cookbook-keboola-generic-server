@@ -143,24 +143,6 @@
                 },
                 "AWS::CloudFormation::Init": {
                     "config": {
-                        "packages": {
-                            "yum": {
-                                "gcc-c++": [],
-                                "ruby-devel": [],
-                                "make": [],
-                                "htop": [],
-                                "autoconf": [],
-                                "automake": [],
-                                "rubygems": [],
-                                "ruby-devel": [],
-                                "libcurl-devel": [],
-                                "libxml2-devel": [],
-                                "libxslt-devel": [],
-                                "curl": [],
-                                "git": [],
-                                "xfsprogs": []
-                            }
-                        },
                         "files": {
                             "/var/chef/environments/production.json": {
                                 "source": "https://s3.amazonaws.com/keboola-configs/servers/environments/production.json",
