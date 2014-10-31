@@ -1,2 +1,2 @@
 
-default['php']['packages'] = %w{ php54 php54-devel php-pear php54-pdo php54-mysql php54-mbstring php54-mcrypt php54-pecl-apc }
+default['php']['packages'] = %w{ php55 php55-devel php-pear php55-pdo php55-mysql php55-mbstring php55-mcrypt php54-pecl-apcu }

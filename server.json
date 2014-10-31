@@ -157,7 +157,7 @@
                             },
                             "/var/init/node.json": {
                                 "content": {
-                                    "run_list": [ "recipe[keboola-common]",  "recipe[keboola-php]", "recipe[keboola-apache2]", "recipe[keboola-generic-server::demo]" ],
+                                    "run_list": [ "recipe[keboola-common]",  "recipe[keboola-php55]", "recipe[keboola-apache2]", "recipe[keboola-generic-server::demo]" ],
                                     "aws": {
                                         "aws_access_key_id": {
                                             "Ref": "HostKeys"
