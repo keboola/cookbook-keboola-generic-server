@@ -4,5 +4,6 @@
 	</head>
 	<body>
 		<h1>Keboola Generic Server</h1>
+		<p>PHP Version: <?php phpversion(); ?>
 	</body>
 </html>

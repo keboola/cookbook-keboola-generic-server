@@ -5,8 +5,8 @@ directory "/www/demo" do
 	group "apache"
 end
 
-cookbook_file "/www/demo/index.html" do
-  source "index.html"
+cookbook_file "/www/demo/index.php" do
+  source "index.php"
   mode "0644"
   owner "deploy"
   group "apache"
