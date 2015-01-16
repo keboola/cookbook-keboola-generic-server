@@ -89,6 +89,9 @@
         "AWSRegionArch2AMI": {
             "us-east-1": {
                 "PV64": "ami-08842d60"
+            },
+            "eu-west-1": {
+                "PV64": "ami-6e7bd919"
             }
         }
     },
