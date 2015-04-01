@@ -88,7 +88,7 @@
         },
         "AWSRegionArch2AMI": {
             "us-east-1": {
-                "PV64": "ami-08842d60"
+                "PV64": "ami-28cae740"
             },
             "eu-west-1": {
                 "PV64": "ami-6e7bd919"
@@ -160,7 +160,7 @@
                             },
                             "/var/init/node.json": {
                                 "content": {
-                                    "run_list": [ "recipe[keboola-common]",  "recipe[keboola-php55]", "recipe[keboola-apache2]", "recipe[keboola-generic-server::demo]" ],
+                                    "run_list": [ "recipe[keboola-common]",  "recipe[keboola-php56]", "recipe[keboola-apache2]", "recipe[keboola-generic-server::demo]" ],
                                     "aws": {
                                         "aws_access_key_id": {
                                             "Ref": "HostKeys"
