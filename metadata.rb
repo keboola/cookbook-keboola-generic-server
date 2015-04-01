@@ -8,6 +8,6 @@ version          '0.2.2'
 
 
 depends 'aws', '~> 2.4.0'
-depends 'keboola-php55'
+depends 'keboola-php56'
 depends 'keboola-common'
 depends 'keboola-apache2'
