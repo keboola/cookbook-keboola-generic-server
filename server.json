@@ -70,6 +70,9 @@
             "c3.xlarge": {
                 "Arch": "PV64"
             },
+            "c3.8xlarge": {
+                "Arch": "PV64"
+            },            
             "cc1.4xlarge": {
                 "Arch": "CLU64"
             },
