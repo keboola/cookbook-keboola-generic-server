@@ -34,6 +34,7 @@
             "us-east-1": {
                 "HVM64": "ami-60b6c60a"
             }
+        }
     },
     "Resources": {
 
