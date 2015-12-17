@@ -6,7 +6,7 @@
             "Description": "WebServer EC2 instance type",
             "Type": "String",
             "Default": "c3.large",
-            "AllowedValues": [ "t1.micro", "m1.small", "m1.medium", "m3.medium", "m3.large", "c3.large", "c3.xlarge", "c3.8xlarge", "m1.large", "m1.xlarge", "m3.xlarge", "m3.2xlarge", "m2.xlarge", "m2.2xlarge", "m2.4xlarge", "c1.medium", "c1.xlarge", "cc1.4xlarge", "cc2.8xlarge", "cg1.4xlarge", "hi1.4xlarge", "hs1.8xlarge"],
+            "AllowedValues": [ "t2.micro", "m1.small", "m1.medium", "m3.medium", "m3.large", "c3.large", "c3.xlarge", "m1.large", "m1.xlarge", "m3.xlarge", "m3.2xlarge", "m2.xlarge", "m2.2xlarge", "m2.4xlarge", "c1.medium", "c1.xlarge", "cc1.4xlarge", "cc2.8xlarge", "cg1.4xlarge", "hi1.4xlarge", "hs1.8xlarge"],
             "ConstraintDescription": "must be a valid EC2 instance type."
         },
        "SecurityGroupId": {
@@ -22,84 +22,18 @@
     },
     "Mappings": {
         "AWSInstanceType2Arch": {
-            "t1.micro": {
-                "Arch": "PV64"
+            "t2.micro": {
+                "Arch": "HVM64"
             },
-            "m1.small": {
-                "Arch": "PV64"
-            },
-            "m1.medium": {
-                "Arch": "PV64"
-            },
-            "m3.medium": {
-                "Arch": "PV64"
-            },
-            "m3.large": {
-                "Arch": "PV64"
-            },
-            "m1.large": {
-                "Arch": "PV64"
-            },
-            "m1.xlarge": {
-                "Arch": "PV64"
-            },
+
             "m3.xlarge": {
-                "Arch": "PV64"
-            },
-            "m3.2xlarge": {
-                "Arch": "PV64"
-            },
-            "m2.xlarge": {
-                "Arch": "PV64"
-            },
-            "m2.2xlarge": {
-                "Arch": "PV64"
-            },
-            "m2.4xlarge": {
-                "Arch": "PV64"
-            },
-            "c1.medium": {
-                "Arch": "PV64"
-            },
-            "c1.xlarge": {
-                "Arch": "PV64"
-            },
-            "c3.large": {
-                "Arch": "PV64"
-            },
-            "c3.xlarge": {
-                "Arch": "PV64"
-            },
-            "c3.8xlarge": {
-                "Arch": "PV64"
-            },            
-            "cc1.4xlarge": {
-                "Arch": "CLU64"
-            },
-            "cc2.8xlarge": {
-                "Arch": "CLU64"
-            },
-            "cg1.4xlarge": {
-                "Arch": "GPU64"
-            },
-            "hi1.4xlarge": {
-                "Arch": "PV64"
-            },
-            "hs1.8xlarge": {
-                "Arch": "PV64"
+                "Arch": "HVM64"
             }
         },
         "AWSRegionArch2AMI": {
             "us-east-1": {
-                "PV64": "ami-28cae740"
-            },
-            "eu-west-1": {
-                "PV64": "ami-6e7bd919"
-            },
-            "us-west-1": {
-                "PV64": "ami-3b14f27f"
+                "HVM64": "ami-60b6c60a"
             }
-        }
     },
     "Resources": {
 
@@ -196,7 +130,7 @@
                                 "content": {
                                     "Fn::Join": ["\n", [
                                         "curl -# -L -k -o /tmp/cookbook-keboola-generic-server.tar.gz https://github.com/keboola/cookbook-keboola-generic-server/archive/master.tar.gz",
-                                        "curl -L \"https://packagecloud.io/chef/stable/download?distro=6&filename=chefdk-0.2.2-1.x86_64.rpm\" > /tmp/chefdk.rpm",
+                                        "curl -L \"https://opscode-omnibus-packages.s3.amazonaws.com/el/6/x86_64/chefdk-0.10.0-1.el6.x86_64.rpm\" > /tmp/chefdk.rpm",
                                         "rpm -i /tmp/chefdk.rpm",
                                         "mkdir -p /var/chef/cookbooks/keboola-generic-server",
                                         "tar --strip 1 -C /var/chef/cookbooks/keboola-generic-server -xf /tmp/cookbook-keboola-generic-server.tar.gz",
@@ -235,14 +169,7 @@
                     "Ref": "InstanceType"
                 },
                 "BlockDeviceMappings": [
-                    {
-                        "DeviceName":"/dev/sdb",
-                        "VirtualName" : "ephemeral0"
-                    },
-                    {
-                        "DeviceName": "/dev/sdc",
-                        "VirtualName" : "ephemeral1"
-                    }
+
                 ],
                 "NetworkInterfaces": [
                     {
