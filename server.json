@@ -37,42 +37,84 @@
     },
     "Resources": {
 
-        "CfnUser": {
-            "Type": "AWS::IAM::User",
-            "Properties": {
-                "Path": "/",
-                "Policies": [
-                    {
-                        "PolicyName": "root",
-                        "PolicyDocument": {
-                            "Statement": [
-                                {
-                                    "Sid": "Stmt1329997232569xk",
-                                    "Action": [
-                                        "s3:GetObject"
-                                    ],
-                                    "Effect": "Allow",
-                                    "Resource": [
-                                        "arn:aws:s3:::keboola-configs/certificates/*",
-                                        "arn:aws:s3:::keboola-configs/servers/*"
-                                    ]
-                                }
-                            ]
-                        }
-                    }
-                ]
-            }
-        },
+      "InstanceRole": {
+          "Type": "AWS::IAM::Role",
+          "Properties": {
+              "AssumeRolePolicyDocument": {
+                  "Statement": [
+                      {
+                          "Effect": "Allow",
+                          "Principal": {
+                              "Service": [
+                                  "ec2.amazonaws.com"
+                              ]
+                          },
+                          "Action": [
+                              "sts:AssumeRole"
+                          ]
+                      }
+                  ]
+              },
+              "Path": "/"
+          }
+      },
 
+      "InstanceRolePolicies": {
+          "Type": "AWS::IAM::Policy",
+          "Properties": {
+              "PolicyName": "InstanceRole",
+              "PolicyDocument": {
+                  "Statement": [
+                      {
+                          "Sid": "CodeDeploy",
+                          "Effect": "Allow",
+                          "Action": [
+                              "s3:Get*",
+                              "s3:List*"
+                          ],
+                          "Resource": [
+                              "arn:aws:s3:::aws-codedeploy-us-east-1/*",
+                              "arn:aws:s3:::aws-codedeploy-us-west-2/*",
+                              "arn:aws:s3:::aws-codedeploy-eu-west-1/*",
+                              "arn:aws:s3:::aws-codedeploy-eu-central-1/*",
+                              "arn:aws:s3:::aws-codedeploy-ap-southeast-1/*",
+                              "arn:aws:s3:::aws-codedeploy-ap-southeast-2/*",
+                              "arn:aws:s3:::aws-codedeploy-ap-northeast-1/*"
+                          ]
+                      },
+                      {
+                          "Sid": "ParamsDownload",
+                          "Action": [
+                              "s3:Get*",
+                              "s3:List*"
+                          ],
+                          "Effect": "Allow",
+                          "Resource": [
+                              "arn:aws:s3:::keboola-configs/certificates/*",
+                              "arn:aws:s3:::keboola-configs/servers/*"
+                          ]
+                      }
+                  ]
+              },
+              "Roles": [
+                  {
+                      "Ref": "InstanceRole"
+                  }
+              ]
+          }
+      },
 
-        "HostKeys": {
-            "Type": "AWS::IAM::AccessKey",
-            "Properties": {
-                "UserName": {
-                    "Ref": "CfnUser"
-                }
-            }
-        },
+      "InstanceRoleInstanceProfile": {
+          "Type": "AWS::IAM::InstanceProfile",
+          "Properties": {
+              "Path": "/",
+              "Roles": [
+                  {
+                      "Ref": "InstanceRole"
+                  }
+              ]
+          }
+      },
 
         "Ec2Instance": {
             "Type": "AWS::EC2::Instance",
@@ -80,8 +122,7 @@
                 "AWS::CloudFormation::Authentication" : {
                     "S3AccessCredentials" : {
                         "type" : "S3",
-                        "accessKeyId" : { "Ref" : "HostKeys" },
-                        "secretKey" : { "Fn::GetAtt": [ "HostKeys", "SecretAccessKey" ] }
+                        "roleName": { "Ref": "InstanceRole" }
                     }
                 },
                 "AWS::CloudFormation::Init": {
@@ -100,16 +141,7 @@
                             },
                             "/var/init/node.json": {
                                 "content": {
-                                    "run_list": [ "recipe[keboola-common]",  "recipe[keboola-php56]", "recipe[keboola-apache2]", "recipe[keboola-generic-server::demo]" ],
-                                    "aws": {
-                                        "aws_access_key_id": {
-                                            "Ref": "HostKeys"
-                                        },
-                                        "aws_secret_access_key": {
-                                            "Fn::GetAtt": [ "HostKeys", "SecretAccessKey" ]
-                                        }
-
-                                    }
+                                    "run_list": [ "recipe[keboola-common]",  "recipe[keboola-php56]", "recipe[keboola-apache2]", "recipe[keboola-generic-server::demo]" ]
                                 },
                                 "mode": "000644",
                                 "owner": "root",
@@ -181,6 +213,9 @@
                     }
                 ],
                 "KeyName": "Martin",
+                "IamInstanceProfile": {
+                    "Ref": "InstanceRoleInstanceProfile"
+                },
                 "UserData": {
                     "Fn::Base64": {
                         "Fn::Join": ["", [
